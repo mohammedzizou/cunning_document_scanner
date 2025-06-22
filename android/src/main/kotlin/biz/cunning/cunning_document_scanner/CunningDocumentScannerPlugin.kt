@@ -1,9 +1,13 @@
 package biz.cunning.cunning_document_scanner
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.IntentSender
+import android.view.Gravity
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import biz.cunning.cunning_document_scanner.fallback.DocumentScannerActivity
 import biz.cunning.cunning_document_scanner.fallback.constants.DocumentScannerExtra
@@ -169,7 +173,19 @@ class CunningDocumentScannerPlugin : FlutterPlugin, MethodCallHandler, ActivityA
     /**
      * add document scanner result handler and launch the document scanner
      */
+    @SuppressLint("SetTextI18n", "InflateParams")
     private fun startScan(noOfPages: Int, isGalleryImportAllowed: Boolean) {
+        val inflater = activity.layoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, null)
+
+        val textView = layout.findViewById<TextView>(R.id.toast_text)
+        textView.text = "Enable Flash and clean your camera for better scanning."
+
+        val toast = Toast(activity.applicationContext)
+        toast.setGravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 72)
+        toast.duration = Toast.LENGTH_LONG
+        toast.setView(layout)
+        toast.show()
         val options = GmsDocumentScannerOptions.Builder()
             .setGalleryImportAllowed(isGalleryImportAllowed)
             .setPageLimit(noOfPages)
