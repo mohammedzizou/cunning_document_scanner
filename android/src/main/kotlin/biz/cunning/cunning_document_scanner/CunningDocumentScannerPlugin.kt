@@ -177,13 +177,10 @@ class CunningDocumentScannerPlugin : FlutterPlugin, MethodCallHandler, ActivityA
     private fun startScan(noOfPages: Int, isGalleryImportAllowed: Boolean) {
         val inflater = activity.layoutInflater
         val layout = inflater.inflate(R.layout.custom_toast, null)
-
         val textView = layout.findViewById<TextView>(R.id.toast_text)
         textView.text = "Enable Flash and clean your camera for better scanning."
-
-        val toast = Toast(activity.applicationContext)
-        toast.setGravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 72)
-        toast.duration = Toast.LENGTH_LONG
+       val toast = Toast(activity.applicationContext)
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
         toast.setView(layout)
         toast.show()
         val options = GmsDocumentScannerOptions.Builder()
